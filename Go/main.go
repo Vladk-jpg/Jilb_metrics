@@ -22,10 +22,52 @@ func extraStringManipulation(s string) string {
 }
 
 func main() {
+
+	u := 1
+
+	if u > 0 {
+		if u > 0 {
+
+		} else if u == 5 {
+
+		}
+	} else if u < 0 {
+		if u < 5 {
+
+		} else if u > 5 {
+
+		} else if u == 8 {
+
+		} else if u == 4 {
+
+		} else {
+			if u == 7 {
+
+			}
+		}
+	} else if u == 0 {
+
+	} else {
+		if u == 5 {
+
+		} else {
+			if u == 8 {
+
+			}
+		}
+	}
+
+	for i := 0; i < 10; i++ {
+
+	}
+
 	x := 42
 	if x > 0 {
 		fmt.Println("x положительный")
 	} else if x < 0 {
+		if x == 0 {
+			x = 0
+		}
 		fmt.Println("x отрицательный")
 	} else {
 		fmt.Println("x равен нулю")
@@ -112,6 +154,9 @@ func main() {
 				fmt.Println("y нечетный и находится между 20 и 30")
 			} else if y%5 == 0 {
 				fmt.Println("y делится на 5 и находится между 20 и 30")
+			}
+			if y%2 == 0 {
+
 			}
 		default:
 			if y > 50 {
