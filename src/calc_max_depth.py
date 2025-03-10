@@ -3,6 +3,32 @@ from pygments.lexers import GoLexer
 from pygments.token import Token
 import os
 
+#недописана логика
+def replaceSwitch(words: list, start, finish):
+    i = start
+    switch_start = start
+    was_switch = False
+    flex_finish = finish
+    while i < flex_finish or was_switch:
+        if words[i] == "switch":
+            switch_start = i
+            was_switch = True
+            j = i + 1
+            balance = 1
+            while balance != 0:
+                j += 1
+                if words[j] == "{":
+                    balance += 1
+                elif words[j] == "}":
+                    balance -= 1
+            replaceSwitch(words, i + 2, j)
+            i = j
+
+        i += 1
+
+
+
+#Рабочий метод заменяющий все elseif на if в нужной степени вложенности
 def replaceIf(words: list, start, finish):
     i = start
     start_of_if = start
