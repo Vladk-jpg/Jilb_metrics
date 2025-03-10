@@ -36,13 +36,19 @@ func main() {
 
 		} else if u > 5 {
 
-		} else if u == 8 {
-
-		} else if u == 4 {
-
 		} else {
-			if u == 7 {
+			for u < 7 {
+				switch u {
+				case 1:
+				case 2:
+					switch u {
+					case 3:
+					default:
+						if u == 7 {
 
+						}
+					}
+				}
 			}
 		}
 	} else if u == 0 {
@@ -92,36 +98,36 @@ func main() {
 		}
 	}
 
-	for a := 0; a < 2; a++ {
-		for b := 0; b < 2; b++ {
-			for c := 0; c < 2; c++ {
-				for d := 0; d < 2; d++ {
-					for e := 0; e < 2; e++ {
-						for f := 0; f < 2; f++ {
-							sum := a + b + c + d + e + f
-							if sum > 3 {
-								fmt.Println("Сумма значений вложенных переменных больше 3:", sum)
-							}
-							if a == 1 {
-								fmt.Println("Переменная a равна 1")
-							} else if b == 1 {
-								fmt.Println("Переменная b равна 1")
-							}
+	// for a := 0; a < 2; a++ {
+	// 	for b := 0; b < 2; b++ {
+	// 		for c := 0; c < 2; c++ {
+	// 			for d := 0; d < 2; d++ {
+	// 				for e := 0; e < 2; e++ {
+	// 					for f := 0; f < 2; f++ {
+	// 						sum := a + b + c + d + e + f
+	// 						if sum > 3 {
+	// 							fmt.Println("Сумма значений вложенных переменных больше 3:", sum)
+	// 						}
+	// 						if a == 1 {
+	// 							fmt.Println("Переменная a равна 1")
+	// 						} else if b == 1 {
+	// 							fmt.Println("Переменная b равна 1")
+	// 						}
 
-							switch {
-							case c == 1 && d == 0:
-								fmt.Println("c равна 1, а d равна 0")
-							case e == 1:
-								fmt.Println("e равна 1")
-							default:
-								fmt.Println("Другие комбинации: a, b, c, d, e, f =", a, b, c, d, e, f)
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	// 						switch {
+	// 						case c == 1 && d == 0:
+	// 							fmt.Println("c равна 1, а d равна 0")
+	// 						case e == 1:
+	// 							fmt.Println("e равна 1")
+	// 						default:
+	// 							fmt.Println("Другие комбинации: a, b, c, d, e, f =", a, b, c, d, e, f)
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	for i := 0; i < 10; i++ {
 		if i%3 == 0 {

@@ -3,16 +3,15 @@ from pygments.lexers import GoLexer
 from pygments.token import Token
 import os
 
-#недописана логика
-def replaceSwitch(words: list, start, finish):
+def countIf(words: list, start, finish) -> int:
     i = start
-    switch_start = start
-    was_switch = False
-    flex_finish = finish
-    while i < flex_finish or was_switch:
-        if words[i] == "switch":
-            switch_start = i
-            was_switch = True
+    max_depth = 0
+    curr_depth = 0
+    while i < finish:
+        if words[i] == "if" or words[i] == "for" or words[i] == "else":
+            if words[i] != "else":
+                curr_depth = 1
+
             j = i + 1
             balance = 1
             while balance != 0:
@@ -21,11 +20,70 @@ def replaceSwitch(words: list, start, finish):
                     balance += 1
                 elif words[j] == "}":
                     balance -= 1
-            replaceSwitch(words, i + 2, j)
+            curr_depth += countIf(words, i + 2, j)
+            if curr_depth > max_depth:
+                max_depth = curr_depth
+            i = j
+        
+        if words[i] == "switch":
+            j = i + 1
+            balance = 1
+            while balance != 0:
+                j += 1
+                if words[j] == "{":
+                    balance += 1
+                elif words[j] == "}":
+                    balance -= 1
+            curr_depth += countSwitch(words, i + 2, j)
+            if curr_depth > max_depth:
+                max_depth = curr_depth
             i = j
 
         i += 1
+    return max_depth
+            
 
+def countSwitch(words: list, start, finish) -> int:
+    i = start
+    max_depth = 0
+    curr_depth = 0
+    case_depth = 0
+    while i < finish:
+        if words[i] == "case":
+            j = i 
+            case_depth += 1
+            was_case = False
+            while not was_case and j < finish:
+                j += 1
+                if words[j] == "case" or words[j] == "default":
+                    was_case = True
+                elif words[j] == "switch":
+                    k = j + 1
+                    balance = 1
+                    while balance != 0:
+                        k += 1
+                        if words[k] == "{":
+                            balance += 1
+                        elif words[k] == "}":
+                            balance -= 1
+                    curr_depth += countSwitch(words, j + 2, k)
+                    if curr_depth > max_depth:
+                        max_depth = curr_depth
+                    j = k
+            
+            curr_depth = countIf(words, i + 1, j) + case_depth
+            if curr_depth > max_depth:
+                max_depth = curr_depth
+            i = j - 1
+        
+        elif words[i] == "default":
+            curr_depth = countIf(words, i + 1, finish) + case_depth
+            if curr_depth > max_depth:
+                max_depth = curr_depth
+            i = finish - 1
+
+        i += 1
+    return max_depth
 
 
 #Рабочий метод заменяющий все elseif на if в нужной степени вложенности
@@ -35,7 +93,7 @@ def replaceIf(words: list, start, finish):
     was_elseif = False
     #находим конец 
     while i < finish or was_elseif:
-        if words[i] == "if" and not was_elseif or words[i] == "elseif" or words[i] == "else":
+        if i < finish and (words[i] == "if" and not was_elseif or words[i] == "elseif" or words[i] == "else"):
             if words[i] == "if":
                 start_of_if = i
             if words[i] == "elseif":
@@ -122,27 +180,20 @@ def calc_max_depth(code):
             words.append(value)
             closed_brace_count += 1
     
-    print(" ".join(words))
+    #print(" ".join(words))
 
-    print()
+    #print()
 
     replaceIf(words, 0, len(words))
-    print(" ".join(words))
+    #print(" ".join(words))
 
-    b1, b2 = 0, 0
-    for i in words:
-        if(i == "{"):
-            b1 += 1
-        if i == "}":
-            b2 += 1
-    print (b1, b2)
         
 
-    return max_depth
+    return countIf(words, 0, len(words)) - 1
 
-file_path = os.path.abspath("Go/main.go")
+# file_path = os.path.abspath("Go/main.go")
 
-with open(file_path, "r", encoding="utf-8") as f:
-    code = f.read()
+# with open(file_path, "r", encoding="utf-8") as f:
+#     code = f.read()
 
-print(calc_max_depth(code))
+# print(calc_max_depth(code))
